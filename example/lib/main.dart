@@ -24,8 +24,9 @@ class HomePage extends StatelessWidget {
   PageController? _ctrl;
   @override
   Widget build(BuildContext context) {
-    final NepaliDateTime first = NepaliDateTime(2080, 1);
-    final NepaliDateTime last = NepaliDateTime(2081, 1);
+    final NepaliDateTime first = NepaliDateTime(NepaliDateTime.now().year, 1);
+    final NepaliDateTime last =
+        NepaliDateTime(NepaliDateTime.now().year + 1, 1);
     return Scaffold(
       appBar: AppBar(
         title: const Text('Clean Nepali Calendar'),
@@ -132,27 +133,28 @@ class HomePage extends StatelessWidget {
       padding: const EdgeInsets.all(3),
       duration: const Duration(milliseconds: 2000),
       decoration: _buildCellDecoration(),
-      child: Center(
-        child: Column(
-          children: [
-            Text(text,
-                style: TextStyle(
-                    fontSize: 20, color: isWeekend ? Colors.red : null)),
-
-            // to show events
-            const Align(
-                alignment: Alignment.bottomCenter,
-                child: CircleAvatar(
-                  radius: 1,
-                )),
-            Align(
-              alignment: Alignment.bottomRight,
-              child: Text(nepaliDate.toDateTime().day.toString(),
-                  style: TextStyle(
-                      fontSize: 8, color: isWeekend ? Colors.red : null)),
+      child: Stack(
+        alignment: Alignment.bottomRight,
+        children: [
+          Center(
+            child: Text(
+              text,
+              style:
+                  TextStyle(fontSize: 20, color: isWeekend ? Colors.red : null),
             ),
-          ],
-        ),
+          ),
+
+          // to show events
+          const Align(
+              alignment: Alignment.bottomCenter,
+              child: CircleAvatar(
+                radius: 1,
+              )),
+          Text(
+            nepaliDate.toDateTime().day.toString(),
+            style: TextStyle(fontSize: 8, color: isWeekend ? Colors.red : null),
+          ),
+        ],
       ),
     );
   }
